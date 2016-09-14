@@ -5,6 +5,7 @@ RUN apt-get update \
     build-essential \
     gdb \
     osmctools \
+    vi \
   && rm -rf /var/lib/apt/lists/*
 
 ARG MAT_SHA512=212713dff859ff8f2b1cb898584ff0a1c16abf4ef0264ef5cc410416957ac5282bb02f2e4ecd46dbb0e7beb3fbfce229588f1231cb88b725af5ca62b22c23b3c
