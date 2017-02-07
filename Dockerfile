@@ -21,11 +21,11 @@ RUN echo "$MAT_SHA512  mat.zip" | sha512sum -c - && \
   rm mat.zip && \
   ln -s mat/MemoryAnalyzer MemoryAnalyzer
 
-RUN mkdir osmosis && \
-  tar xvfz osmosis-latest.tgz -C osmosis && \
-  chmod a+x osmosis/bin/osmosis && \
+RUN mkdir osmosis-latest && \
+  tar xvfz osmosis-latest.tgz -C osmosis-latest && \
+  chmod a+x osmosis-latest/bin/osmosis && \
   rm osmosis-latest.tgz && \
-  ln -s osmosis/bin/osmosis osmosis
+  ln -s osmosis-latest/bin/osmosis osmosis
 
 VOLUME ["/app", "/data"]
 WORKDIR /app
