@@ -27,6 +27,8 @@ RUN mkdir osmosis-latest && \
   rm osmosis-latest.tgz && \
   ln -s osmosis-latest/bin/osmosis osmosis
 
+COPY ./util/* /_util/
+
 VOLUME ["/app", "/data"]
 WORKDIR /app
 
