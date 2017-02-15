@@ -38,6 +38,7 @@ RUN unzip gdal213.zip && \
   ./configure && \
   make && \
   make install && \
+  ldconfig && \
   cd /tmp && \
   rm gdal213.zip
 
