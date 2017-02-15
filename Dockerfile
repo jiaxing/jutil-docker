@@ -3,7 +3,6 @@ FROM java:8
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     build-essential \
-    gdal-bin \
     gdb \
     osmctools \
     vim \
@@ -13,20 +12,34 @@ ARG MAT_SHA512=212713dff859ff8f2b1cb898584ff0a1c16abf4ef0264ef5cc410416957ac5282
 ARG MAT_URL=http://mirror.csclub.uwaterloo.ca/eclipse/mat/1.6/rcp/MemoryAnalyzer-1.6.0.20160531-linux.gtk.x86_64.zip
 ADD $MAT_URL /usr/bin/mat.zip
 
-ARG OSMOSIS_URL=http://bretth.dev.openstreetmap.org/osmosis-build/osmosis-latest.tgz
-ADD $OSMOSIS_URL /usr/bin/osmosis-latest.tgz
-
 WORKDIR /usr/bin
-RUN echo "$MAT_SHA512  mat.zip" | sha512sum -c - && \
+RUN echo "$MAT_SHA512 mat.zip" | sha512sum -c - && \
   unzip mat.zip && \
   rm mat.zip && \
   ln -s mat/MemoryAnalyzer MemoryAnalyzer
 
+ARG OSMOSIS_URL=http://bretth.dev.openstreetmap.org/osmosis-build/osmosis-latest.tgz
+ADD $OSMOSIS_URL /usr/bin/osmosis-latest.tgz
+
+WORKDIR /usr/bin
 RUN mkdir osmosis-latest && \
   tar xvfz osmosis-latest.tgz -C osmosis-latest && \
   chmod a+x osmosis-latest/bin/osmosis && \
   rm osmosis-latest.tgz && \
   ln -s osmosis-latest/bin/osmosis osmosis
+
+
+ARG GDAL_URL=http://download.osgeo.org/gdal/2.1.3/gdal213.zip
+ADD $GDAL_URL /tmp/gdal213.zip
+
+WORKDIR /tmp
+RUN unzip gdal213.zip && \
+  cd gdal-2.1.3 && \
+  ./configure && \
+  make && \
+  make install && \
+  cd /tmp && \
+  rm gdal213.zip
 
 COPY ./util/* /_util/
 
